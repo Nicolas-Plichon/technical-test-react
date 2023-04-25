@@ -1,12 +1,25 @@
 /* eslint-disable max-len */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import itemsData from '../../data/items';
 import ShoppingListApp from '../ShoppingListApp';
-import './styles.scss';
 import Form from '../Form';
+import './styles.scss';
 
 function App() {
   const [items, setItems] = useState(itemsData);
+
+  // Dès que je change mon state, je mets à jour la liste dans le LocalStorage
+  useEffect(() => {
+    localStorage.setItem('itemsList', JSON.stringify(items));
+  }, [items]);
+
+  // Au chargement de l'application, je charge la liste d'objets présente dans le LocalStorage vers mon state
+  useEffect(() => {
+    const storedItems = localStorage.getItem('itemsList');
+    if (storedItems) {
+      setItems(JSON.parse(storedItems));
+    }
+  }, []);
 
   const handleIncrementeItem = (name: string) => {
     // On récupère l'index de l'élément dans le JSON par son nom qu'on obtient lors du click, puis on incrémente cet élément dans le state
