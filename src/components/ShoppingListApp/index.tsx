@@ -28,25 +28,35 @@ function ShoppingListApp({ items, onIncrementeItem, onDecrementeItem }: ItemsPro
       {items
         .sort((a, b) => b.quantity - a.quantity) // je trie les éléments du JSON par quantité décroissante
         .map((item) => ( // je map pour créer une ligne par élément du JSON
-          <li key={item.name}>
-            {item.name}
-            {' '}
-            -
-            {item.quantity}
+          <li key={item.name} className="itemsList__line">
+            <div className="itemsList__name-qty">
 
-            <button // Bouton "+"
-              type="button"
-              onClick={() => handleIncrementeItem(item.name)}
-            >
-              +
-            </button>
+              <span className="itemsList__name">
+                {item.name}
+              </span>
+              <span className="itemsList__quantity">
+                {' '}
+                -
+                {' '}
+                {item.quantity}
+              </span>
+            </div>
 
-            <button // Bouton "-"
-              type="button"
-              onClick={() => handleDecrementeItem(item.name)}
-            >
-              -
-            </button>
+            <div className="buttons">
+              <button // Bouton "+"
+                type="button"
+                onClick={() => handleIncrementeItem(item.name)}
+              >
+                +
+              </button>
+
+              <button // Bouton "-"
+                type="button"
+                onClick={() => handleDecrementeItem(item.name)}
+              >
+                -
+              </button>
+            </div>
           </li>
         ))}
     </ul>

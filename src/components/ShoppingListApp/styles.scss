@@ -1,4 +1,35 @@
 .itemsList {
   list-style: inside;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  &__name-qty {
+    width: 160px;
+    background-color: grey;
+    border-radius: 5px;
+    padding: 0.2rem;
+    margin-bottom: 5px;
+    display: flex;
+  }
+  
+  &__line {
+    display: flex;
+    line-height: 1,5rem;
+  }
+  
+  &__name {
+    width: 100px;
+    margin: auto;
+  }
+
+  &__quantity {
+  padding-right: 5px;
+  }
+}
+
+.buttons {
+  padding: 0.2rem;
+  margin-bottom: 5px;
+  width: 100px;
 }
