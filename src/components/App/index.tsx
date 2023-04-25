@@ -1,11 +1,66 @@
-import reactLogo from '../../assets/react.svg';
+/* eslint-disable max-len */
+import { useState } from 'react';
+import itemsData from '../../data/items';
+import ShoppingListApp from '../ShoppingListApp';
 import './styles.scss';
+import Form from '../Form';
 
 function App() {
+  const [items, setItems] = useState(itemsData);
+
+  const handleIncrementeItem = (name: string) => {
+    // On récupère l'index de l'élément dans le JSON par son nom qu'on obtient lors du click, puis on incrémente cet élément dans le state
+    const itemToIncremente = name;
+    const newItems = [...items];
+    const index = newItems.findIndex((element) => element.name === itemToIncremente);
+    newItems[index].quantity += 1;
+    setItems(newItems);
+  };
+
+  const handleDecrementeItem = (name: string) => {
+    // On récupère l'index de l'élément dans le JSON par son nom qu'on obtient lors du click, puis on décrémente cet élément
+    const itemToIncremente = name;
+    const newItems = [...items];
+    const index = newItems.findIndex((element) => element.name === itemToIncremente);
+    newItems[index].quantity -= 1;
+
+    // Si la nouvelle quantité atteint 0, on retire l'élément du JSON
+    if (newItems[index].quantity === 0) {
+      newItems.splice(index, 1);
+    }
+
+    // On met à jour le state avec la nouvelle valeur
+    setItems(newItems);
+  };
+
+  // La fonction utilisée pour ajouter un objet à la liste.
+  const handleAddItem = (itemLabel: string) => {
+    // Je crée le nouvel objet en récupérant le nom entré dans le formulaire, et en lui attribuant la quantité de 1
+    const newItem = {
+      name: itemLabel,
+      quantity: 1,
+    };
+
+    // Je déverse mon nouvel objet dans la liste existante
+    const newItemsList = [
+      ...items, newItem,
+    ];
+
+    // Je charge le state avec la liste mise à jour
+    setItems(newItemsList);
+  };
+
   return (
     <div className="app">
-      <h1 className="app__title">Vite + React</h1>
-      <img src={reactLogo} alt="react logo" />
+      <ShoppingListApp
+        items={items}
+        onIncrementeItem={handleIncrementeItem}
+        onDecrementeItem={handleDecrementeItem}
+      />
+
+      <Form
+        onSubmitForm={handleAddItem}
+      />
     </div>
   );
 }
